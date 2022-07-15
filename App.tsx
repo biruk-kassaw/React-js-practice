@@ -2,6 +2,7 @@ import * as React from 'react';
 import './style.css';
 import Nav from './components/nav';
 import Counter from './components/counter';
+import Table from "./components/movieTable"
 console.log(Nav);
 console.log(Counter);
 
@@ -9,7 +10,9 @@ export default function App() {
   return (
     <div>
       <Nav />
+      <Table />
       <Counter />
+
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
     </div>
