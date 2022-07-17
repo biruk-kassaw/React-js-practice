@@ -1,23 +1,17 @@
 import React from 'react';
 
 class Counter extends React.Component {
-  countIncreaser = (num) => {
-    this.setState({ count: this.state.count + 1 });
-    console.log(num);
-  };
-  countDecreaser = () => {
-    this.setState({ count: this.state.count - 1 });
-  };
-
   render() {
     return (
       <div>
         {this.props.counts.map((count) => {
           return (
             <React.Fragment>
-              <button className="btn btn-sm btn-warning m-2">1</button>
+              <button className="btn btn-sm btn-warning m-2">
+                {count.value}
+              </button>
               <button
-                onClick={() => this.countIncreaser(1)}
+                onClick={() => this.props.handleIncrement(count)}
                 className="btn btn-primary btn-sm"
               >
                 +
