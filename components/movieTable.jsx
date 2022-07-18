@@ -37,18 +37,16 @@ class Table extends React.Component {
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
                   <td>
-                    {' '}
-                    <like /> 1{' '}
+                    <a href="">hello</a>
+                    <like />{' '}
                   </td>
                   <td>
-                    {' '}
                     <button
                       onClick={() => {
                         this.handleDelete(movie._id);
                       }}
                       className="btn btn-warning"
                     >
-                      {' '}
                       delete{' '}
                     </button>{' '}
                   </td>
