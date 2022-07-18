@@ -33,13 +33,13 @@ export default class App extends React.Component {
     return (
       <div>
         <Nav counts={this.state.counts.length} />
-        <button className="btn btn-secondary m-2">Reset</button>
-        {/* <Table /> */}
-        <Counter
+        {/* <button className="btn btn-secondary m-2">Reset</button> */}
+        <Table />
+        {/* <Counter
           counts={this.state.counts}
           handleDelete={this.handleDelete}
           handleIncrement={this.handleIncrement}
-        />
+        /> */}
       </div>
     );
   }

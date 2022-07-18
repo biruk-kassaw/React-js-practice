@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@popperjs/core": "^2.10.2",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.2",
     "bootstrap": "^5.1.3",
+    "fortawesome/fontawesome-svg-core": "*",
+    "fortawesome/react-fontawesome": "latest",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
