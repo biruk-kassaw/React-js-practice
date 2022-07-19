@@ -37,8 +37,7 @@ class Table extends React.Component {
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
                   <td>
-                    <a href="">hello</a>
-                    <like />{' '}
+                    <Like movieId={movie._id} />{' '}
                   </td>
                   <td>
                     <button
