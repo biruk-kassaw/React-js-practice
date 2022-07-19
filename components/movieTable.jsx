@@ -7,6 +7,7 @@ class Table extends React.Component {
   state = {
     movies: getMovies(),
     pageSize: 4,
+    currentPage: 1,
   };
 
   handleDelete(_id) {
@@ -26,8 +27,8 @@ class Table extends React.Component {
     movies[index] = newmovie;
     this.setState({ movies });
   };
-  handlePageChange = () => {
-    console.log('page change');
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
   render() {
     return (
@@ -46,7 +47,8 @@ class Table extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => {
+            {
+            this.state.movies.map((movie) => {
               return (
                 <tr key={movie._id}>
                   <th scope="row">{movie.title}</th>
@@ -80,9 +82,8 @@ class Table extends React.Component {
         <Pagination
           itemCount={this.state.movies.length}
           pageSize={this.state.pageSize}
-          onClick={() => {
-            this.handlePageChange;
-          }}
+          handlePageChange={this.handlePageChange}
+          currentPage={this.state.currentPage}
         />
       </div>
     );
