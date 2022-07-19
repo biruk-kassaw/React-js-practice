@@ -1,9 +1,12 @@
 import React from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import Like from './like';
+import Pagination from './pagination';
+
 class Table extends React.Component {
   state = {
     movies: getMovies(),
+    pageSize: 4,
   };
 
   handleDelete(_id) {
@@ -23,6 +26,9 @@ class Table extends React.Component {
     movies[index] = newmovie;
     this.setState({ movies });
   };
+  handlePageChange = () => {
+    console.log('page change');
+  };
   render() {
     return (
       <div>
@@ -35,8 +41,8 @@ class Table extends React.Component {
               <th scope="col">Genre</th>
               <th scope="col">Stock</th>
               <th scope="col">Rate</th>
-              <th scope="col">like</th>
-              <th scope="col">delete</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +67,7 @@ class Table extends React.Component {
                         console.log('clicked');
                         this.handleDelete(movie._id);
                       }}
-                      className="btn btn-warning"
+                      className="btn btn-danger btn-sm"
                     >
                       delete
                     </button>
@@ -71,6 +77,13 @@ class Table extends React.Component {
             })}
           </tbody>
         </table>
+        <Pagination
+          itemCount={this.state.movies.length}
+          pageSize={this.state.pageSize}
+          onClick={() => {
+            this.handlePageChange;
+          }}
+        />
       </div>
     );
   }

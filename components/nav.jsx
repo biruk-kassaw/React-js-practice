@@ -7,7 +7,6 @@ class Nav extends React.Component {
         <a className="navbar-brand" href="#">
           Navbar
         </a>
-        <button className="badge">{this.props.counts}</button>
         <button
           className="navbar-toggler"
           type="button"
