@@ -11,13 +11,24 @@ class Table extends React.Component {
       movies: this.state.movies.filter((movie) => movie._id != _id),
     });
   }
-
+  handleLike = (movie) => {
+    let movies = [...this.state.movies];
+    let index = movies.indexOf(movie);
+    let newmovie = { ...movie };
+    if (newmovie.liked == false) {
+      newmovie.liked = true;
+    } else {
+      newmovie.liked = false;
+    }
+    movies[index] = newmovie;
+    this.setState({ movies });
+  };
   render() {
     return (
       <div>
         {this.state.movies.length > 0}
         <h1> showing {this.state.movies.length} movies in database</h1>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -37,17 +48,23 @@ class Table extends React.Component {
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
                   <td>
-                    <Like movieId={movie._id} />{' '}
+                    <Like
+                      liked={movie.liked}
+                      onClick={() => {
+                        this.handleLike(movie);
+                      }}
+                    />
                   </td>
                   <td>
                     <button
                       onClick={() => {
+                        console.log('clicked');
                         this.handleDelete(movie._id);
                       }}
                       className="btn btn-warning"
                     >
-                      delete{' '}
-                    </button>{' '}
+                      delete
+                    </button>
                   </td>
                 </tr>
               );

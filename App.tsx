@@ -3,8 +3,6 @@ import './style.css';
 import Nav from './components/nav';
 import Counter from './components/counter';
 import Table from './components/movieTable';
-console.log(Nav);
-console.log(Counter);
 
 export default class App extends React.Component {
   state = {
