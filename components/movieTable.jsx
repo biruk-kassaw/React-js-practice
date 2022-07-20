@@ -2,7 +2,7 @@ import React from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import Like from './like';
 import Pagination from './pagination';
-
+import Paginate from '../utils/paginate';
 class Table extends React.Component {
   state = {
     movies: getMovies(),
@@ -30,11 +30,20 @@ class Table extends React.Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  paginateMovies = () => {
+    return Paginate(
+      this.state.movies,
+      this.state.currentPage,
+      this.state.pageSize
+    );
+  };
+
   render() {
+    const movies = this.paginateMovies();
     return (
       <div>
-        {this.state.movies.length > 0}
-        <h1> showing {this.state.movies.length} movies in database</h1>
+        {this.paginateMovies().length > 0}
+        <h1> showing {this.paginateMovies().length} movies in database</h1>
         <table className="table">
           <thead>
             <tr>
@@ -47,8 +56,7 @@ class Table extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {
-            this.state.movies.map((movie) => {
+            {this.paginateMovies().map((movie) => {
               return (
                 <tr key={movie._id}>
                   <th scope="row">{movie.title}</th>

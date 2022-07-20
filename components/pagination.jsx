@@ -8,6 +8,7 @@ export default class Pagination extends React.Component {
       pages.push(i);
     }
     console.log('page', this.props.currentPage);
+    if (noPages === 1) return null;
     return (
       <div>
         <nav aria-label="Page navigation example">
@@ -15,6 +16,7 @@ export default class Pagination extends React.Component {
             {pages.map((page) => {
               return (
                 <li
+                  key={page}
                   className={
                     this.props.currentPage === page
                       ? 'page-item active'
