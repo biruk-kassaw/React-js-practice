@@ -5,17 +5,19 @@ export default class ListGroup extends React.Component {
     return (
       <div className="list-group">
         <a
-          href="#"
+          onClick={() => {
+            this.props.changeGenre('All');
+          }}
           className="list-group-item list-group-item-action active"
           aria-current="true"
         >
-          All Genere
+          All
         </a>
         {this.props.genres.map((genre) => {
           return (
             <a
               onClick={() => {
-                this.props.handleGenreChange(genre);
+                this.props.changeGenre(genre.name);
               }}
               key={genre.name}
               className="list-group-item list-group-item-action"

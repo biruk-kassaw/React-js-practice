@@ -12,6 +12,7 @@ class Table extends React.Component {
     pageSize: 4,
     currentPage: 1,
     genres: getGenres(),
+    currentGenre: 'All',
   };
 
   handleDelete(_id) {
@@ -34,28 +35,36 @@ class Table extends React.Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
-  paginateMovies = () => {
-    return Paginate(
-      this.state.movies,
-      this.state.currentPage,
-      this.state.pageSize
-    );
+  paginateMovies = (movies) => {
+    return Paginate(movies, this.state.currentPage, this.state.pageSize);
   };
-
+  changeGenre = (genre) => {
+    this.setState({ currentGenre: genre });
+  };
   handleGenreChange = (genre) => {
-    console.log(genre);
+    if (genre === 'All') {
+      return this.state.movies;
+    }
+    const movies = this.state.movies.filter((movie) => {
+      const movieGenre = movie.genre.name;
+      const currentGenre = genre;
+      return movieGenre === currentGenre;
+    });
+    return movies;
   };
 
   render() {
-    const movies = this.paginateMovies();
+    let movies = this.handleGenreChange(this.state.currentGenre);
+    movies = this.paginateMovies(movies);
+
     return (
       <div className="container">
-        {this.paginateMovies().length > 0}
-        <h1> showing {this.paginateMovies().length} movies in database</h1>
+        {movies.length > 0}
+        <h1> showing {movies.length} movies in database</h1>
         <div className="container d-flex flex-row">
           <ListGroup
             genres={this.state.genres}
-            handleGenreChange={this.handleGenreChange}
+            changeGenre={this.changeGenre}
           />
           <div className="ml-5">
             <table className="table">
@@ -70,7 +79,7 @@ class Table extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.paginateMovies().map((movie) => {
+                {movies.map((movie) => {
                   return (
                     <tr key={movie._id}>
                       <th scope="row">{movie.title}</th>
@@ -88,7 +97,6 @@ class Table extends React.Component {
                       <td>
                         <button
                           onClick={() => {
-                            console.log('clicked');
                             this.handleDelete(movie._id);
                           }}
                           className="btn btn-danger btn-sm"
@@ -103,7 +111,7 @@ class Table extends React.Component {
             </table>
 
             <Pagination
-              itemCount={this.state.movies.length}
+              itemCount={movies.length}
               pageSize={this.state.pageSize}
               handlePageChange={this.handlePageChange}
               currentPage={this.state.currentPage}

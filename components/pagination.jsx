@@ -7,7 +7,6 @@ export default class Pagination extends React.Component {
     for (let i = 1; i <= noPages; i++) {
       pages.push(i);
     }
-    console.log('page', this.props.currentPage);
     if (noPages === 1) return null;
     return (
       <div>
