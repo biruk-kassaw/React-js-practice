@@ -8,12 +8,16 @@ import { getGenres } from '../services/fakeGenreService';
 
 class Table extends React.Component {
   state = {
-    movies: getMovies(),
+    movies: [],
     pageSize: 4,
     currentPage: 1,
-    genres: getGenres(),
+    genres: [],
     currentGenre: 'All',
   };
+
+  componentDidMount() {
+    this.setState({ movies: getMovies(), genres: getGenres() });
+  }
 
   handleDelete(_id) {
     this.setState({
@@ -39,7 +43,7 @@ class Table extends React.Component {
     return Paginate(movies, this.state.currentPage, this.state.pageSize);
   };
   changeGenre = (genre) => {
-    this.setState({ currentGenre: genre });
+    this.setState({ currentGenre: genre, currentPage: 1 });
   };
   handleGenreChange = (genre) => {
     if (genre === 'All') {
@@ -55,18 +59,21 @@ class Table extends React.Component {
 
   render() {
     let movies = this.handleGenreChange(this.state.currentGenre);
-    movies = this.paginateMovies(movies);
+    let paginatedMovies = this.paginateMovies(movies);
 
     return (
       <div className="container">
         {movies.length > 0}
         <h1> showing {movies.length} movies in database</h1>
-        <div className="container d-flex flex-row">
-          <ListGroup
-            genres={this.state.genres}
-            changeGenre={this.changeGenre}
-          />
-          <div className="ml-5">
+        <div className="container row">
+          <div className="col-2">
+            <ListGroup
+              genres={this.state.genres}
+              changeGenre={this.changeGenre}
+            />
+          </div>
+
+          <div className="col-4">
             <table className="table">
               <thead>
                 <tr>
@@ -79,7 +86,7 @@ class Table extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {movies.map((movie) => {
+                {paginatedMovies.map((movie) => {
                   return (
                     <tr key={movie._id}>
                       <th scope="row">{movie.title}</th>
