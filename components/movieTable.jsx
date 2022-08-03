@@ -13,6 +13,7 @@ class Table extends React.Component {
     currentPage: 1,
     genres: [],
     currentGenre: 'All',
+    sortBy: 'title',
   };
 
   componentDidMount() {
@@ -24,6 +25,9 @@ class Table extends React.Component {
       movies: this.state.movies.filter((movie) => movie._id != _id),
     });
   }
+  changeSorteBy = (path) => {
+    this.setState({ sortBy: path });
+  };
   handleLike = (movie) => {
     let movies = [...this.state.movies];
     let index = movies.indexOf(movie);
@@ -56,6 +60,23 @@ class Table extends React.Component {
     });
     return movies;
   };
+  handlechangeSorteBy = (movies) => {
+    if (movies == []) {
+      return [];
+    }
+    movies.sort(function (a, b) {
+      let x = a[this.state.sortBy].toLowerCase();
+      let y = b[this.state.sortBy].toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+    return movies;
+  };
 
   render() {
     let movies = this.handleGenreChange(this.state.currentGenre);
@@ -77,10 +98,38 @@ class Table extends React.Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Genre</th>
-                  <th scope="col">Stock</th>
-                  <th scope="col">Rate</th>
+                  <th
+                    scope="col"
+                    onClick={() => {
+                      this.changeSorteBy('title');
+                    }}
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    onClick={() => {
+                      this.changeSorteBy('genre.name');
+                    }}
+                  >
+                    Genre
+                  </th>
+                  <th
+                    scope="col"
+                    onClick={() => {
+                      this.changeSorteBy('stock');
+                    }}
+                  >
+                    Stock
+                  </th>
+                  <th
+                    scope="col"
+                    onClick={() => {
+                      this.changeSorteBy('rate');
+                    }}
+                  >
+                    Rate
+                  </th>
                   <th scope="col"></th>
                   <th scope="col"></th>
                 </tr>
