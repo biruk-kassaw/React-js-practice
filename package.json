@@ -12,7 +12,8 @@
     "fortawesome/fontawesome-svg-core": "*",
     "fortawesome/react-fontawesome": "latest",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
