@@ -8,7 +8,7 @@ import MovieDetail from './components/movieDetail';
 import MovieSearch from './components/movieSearch';
 import NotFound from './components/notFound';
 
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, Navigate } from 'react-router-dom';
 
 export default class App extends React.Component {
   render() {
@@ -18,11 +18,13 @@ export default class App extends React.Component {
         {/* <button className="btn btn-secondary m-2">Reset</button> */}
         <Routes>
           <Route path="/about" element={<About />} />
-          <Route path="/tables" element={<Table />} />
+          <Route path="/tables" element={<Table />}></Route>
           <Route path="/movies/:id" element={<MovieDetail />} />
           <Route path="/movies" element={<MovieSearch />} />
+          <Route path="/" element={<Table />} />
+          <Route path="/hello" element={<Navigate to="/" />} />
+
           <Route path="*" element={<NotFound />} />
-          
         </Routes>
         {/* <Counter
           counts={this.state.counts}
