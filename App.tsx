@@ -5,6 +5,8 @@ import Counter from './components/counter';
 import Table from './components/movieTable';
 import About from './components/about';
 import MovieDetail from './components/movieDetail';
+import MovieSearch from './components/movieSearch';
+import NotFound from './components/notFound';
 
 import { Link, Routes, Route } from 'react-router-dom';
 
@@ -18,6 +20,9 @@ export default class App extends React.Component {
           <Route path="/about" element={<About />} />
           <Route path="/tables" element={<Table />} />
           <Route path="/movies/:id" element={<MovieDetail />} />
+          <Route path="/movies" element={<MovieSearch />} />
+          <Route path="*" element={<NotFound />} />
+          
         </Routes>
         {/* <Counter
           counts={this.state.counts}
