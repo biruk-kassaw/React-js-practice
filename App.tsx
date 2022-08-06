@@ -18,7 +18,9 @@ export default class App extends React.Component {
         {/* <button className="btn btn-secondary m-2">Reset</button> */}
         <Routes>
           <Route path="/about" element={<About />} />
-          <Route path="/tables" element={<Table />}></Route>
+          <Route path="/tables" element={<Table />}>
+            <Route path="new" element={<MovieDetail />} />
+          </Route>
           <Route path="/movies/:id" element={<MovieDetail />} />
           <Route path="/movies" element={<MovieSearch />} />
           <Route path="/" element={<Table />} />
@@ -26,11 +28,6 @@ export default class App extends React.Component {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* <Counter
-          counts={this.state.counts}
-          handleDelete={this.handleDelete}
-          handleIncrement={this.handleIncrement}
-        /> */}
       </div>
     );
   }

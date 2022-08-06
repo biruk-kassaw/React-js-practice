@@ -5,7 +5,7 @@ import Pagination from './pagination';
 import Paginate from '../utils/paginate';
 import ListGroup from './listGroup';
 import { getGenres } from '../services/fakeGenreService';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 class Table extends React.Component {
   state = {
     movies: [],
@@ -83,6 +83,7 @@ class Table extends React.Component {
     let paginatedMovies = this.paginateMovies(movies);
 
     return (
+
       <div className="container">
         {movies.length > 0}
         <h1> showing {movies.length} movies in database</h1>
