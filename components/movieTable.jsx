@@ -5,7 +5,7 @@ import Pagination from './pagination';
 import Paginate from '../utils/paginate';
 import ListGroup from './listGroup';
 import { getGenres } from '../services/fakeGenreService';
-
+import {Link} from "react-router-dom"
 class Table extends React.Component {
   state = {
     movies: [],
@@ -138,7 +138,9 @@ class Table extends React.Component {
                 {paginatedMovies.map((movie) => {
                   return (
                     <tr key={movie._id}>
-                      <th scope="row">{movie.title}</th>
+                      <th scope="row">
+                        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+                      </th>
                       <td>{movie.genre.name}</td>
                       <td>{movie.numberInStock}</td>
                       <td>{movie.dailyRentalRate}</td>
