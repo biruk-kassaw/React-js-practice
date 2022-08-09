@@ -11,14 +11,16 @@ class LogIn extends React.Component {
   };
 
   validate = ()=>{
-    const errors = {...this.state.errors}
+    const errors = {}
     
     if(this.state.account.userName === ""){
-      errors[userName] = "username maust"
+      errors['userName'] = "username maust"
     }
+
     if(this.state.account.password === ""){
-      errors[password] = "password maust"
+      errors['password'] = "password maust"
     }
+
     return errors
   }
   handleSubmit = (e) => {
@@ -26,17 +28,36 @@ class LogIn extends React.Component {
     const errors = this.validate()
     if(errors){
       console.log(errors)
+      this.setState({errors})
       return
     }
     console.log('submited');
   };
+  validateInput = (input)=>{
+    if (input.name === "userName"){
+      if (input.value === "") return "Username is required"
+    }
+    if (input.name === "password"){
+      if (input.value === "") return "password is required"
+    }
+  }
+
   handleChange = ({ target }) => {
     let account = { ...this.state.account };
+    let errors = {...this.stafte.errors}
     account[target.name] = target.value;
-    this.setState({ account });
+    
+    const error = this.validateInput(target)
+    if (error){
+      errors[target.name] = error
+    }else{
+      errors[target.name] = ""
+    }
+    this.setState({ account , errors});
   };
   render() {
     const { account, errors } = this.state;
+    console.log("render",errors)
     return (
       <form className="container" onSubmit={this.handleSubmit}>
         <h2>Login</h2>
