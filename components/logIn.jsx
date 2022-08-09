@@ -1,34 +1,64 @@
 import React from 'react';
+import Input from './input';
 
 class LogIn extends React.Component {
+  state = {
+    account: {
+      userName: '',
+      password: '',
+    },
+    errors: {}
+  };
+
+  validate = ()=>{
+    const errors = {...this.state.errors}
+    
+    if(this.state.account.userName === ""){
+      errors[userName] = "username maust"
+    }
+    if(this.state.account.password === ""){
+      errors[password] = "password maust"
+    }
+    return errors
+  }
   handleSubmit = (e) => {
     e.preventDefault();
+    const errors = this.validate()
+    if(errors){
+      console.log(errors)
+      return
+    }
     console.log('submited');
   };
+  handleChange = ({ target }) => {
+    let account = { ...this.state.account };
+    account[target.name] = target.value;
+    this.setState({ account });
+  };
   render() {
+    const { account, errors } = this.state;
     return (
       <form className="container" onSubmit={this.handleSubmit}>
         <h2>Login</h2>
-        <div class="form-group m-3">
-          <label htmlFor="exampleInputEmail1">Email address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-          />
-        </div>
-        <div class="form-group m-3">
-          <label htmlFor="exampleInputPassword1">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">
+        <Input
+          label="Username"
+          name="userName"
+          onChange={this.handleChange}
+          value={account.userName}
+          type="text"
+          error={errors.userName}
+        />
+
+        <Input
+          label="Password"
+          name="password"
+          onChange={this.handleChange}
+          value={account.password}
+          type="password"
+          error={errors.password}
+        />
+
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
