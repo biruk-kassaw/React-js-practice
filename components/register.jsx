@@ -8,8 +8,32 @@ class Register extends React.Component {
     errors: {},
   };
 
-  handleChange = () => {};
-  handleSubmit = () => {};
+  handleChange = ({ target }) => {
+    const user = { ...this.state.user };
+    user[target.name] = target.value;
+    this.setState({ user });
+  };
+
+  validate = () => {
+    const errors = {};
+    const { userName, email, password } = this.state.user;
+    if (userName.length < 3) {
+      errors.userName = 'length must be greater than 3';
+    }
+    if (userName.length > 5) {
+      errors.userName = 'length must be less than 6';
+    }
+    if (password.length < 6) {
+      errors.password = 'length must be greater than 6';
+    }
+
+    return errors;
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = this.validate();
+    this.setState({ errors });
+  };
   render() {
     const { user, errors } = this.state;
     return (
@@ -18,7 +42,7 @@ class Register extends React.Component {
         <Input
           value={user.email}
           name="email"
-          type="email"
+          type="text"
           onChange={this.handleChange}
           label="Enter Email"
           error={errors.email}
