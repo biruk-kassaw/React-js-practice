@@ -76,8 +76,8 @@ class LogIn extends React.Component {
           type="password"
           error={errors.password}
         />
-
-        <button type="submit" className="btn btn-primary">
+        {console.log(this.validate())}
+        <button type="submit" className="btn btn-primary" disabled={Object.keys(this.validate()).length !== 0 }>
           Submit
         </button>
       </form>
