@@ -7,11 +7,35 @@ class Register extends React.Component {
     user: { userName: '', email: '', password: '' },
     errors: {},
   };
-
+  validateInput = (target) => {
+    let error = '';
+    if (target.name == 'userName') {
+      const userName = target.value;
+      if (userName.length < 3) {
+        error = 'length must be greater than 3';
+      }
+      if (userName.length > 5) {
+        error = 'length must be less than 6 characters';
+      }
+    }
+    if (target.name == 'password') {
+      const password = target.value;
+      if (password.length < 6) {
+        error = 'password length must be greater than 6 characters';
+      }
+    }
+    return error;
+  };
   handleChange = ({ target }) => {
-    const user = { ...this.state.user };
+    let errors = { ...this.state.errors };
+    let user = { ...this.state.user };
     user[target.name] = target.value;
-    this.setState({ user });
+
+    const error = this.validateInput(target);
+
+    errors[target.name] = error;
+    console.log(errors);
+    this.setState({ user, errors });
   };
 
   validate = () => {
@@ -33,6 +57,9 @@ class Register extends React.Component {
     e.preventDefault();
     const errors = this.validate();
     this.setState({ errors });
+    if (Object.keys(errors).length == 0) {
+      console.log('submited');
+    }
   };
   render() {
     const { user, errors } = this.state;
