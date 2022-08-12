@@ -41,6 +41,11 @@ class Nav extends React.Component {
                 Login{' '}
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/register">
+                Register{' '}
+              </NavLink>
+            </li>
           </ul>
         </div>
       </nav>

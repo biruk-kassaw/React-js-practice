@@ -8,7 +8,7 @@ import MovieDetail from './components/movieDetail';
 import MovieSearch from './components/movieSearch';
 import NotFound from './components/notFound';
 import LogIn from "./components/logIn"
-
+import Register from "./components/register"
 import { Link, Routes, Route, Navigate } from 'react-router-dom';
 
 export default class App extends React.Component {
@@ -27,6 +27,7 @@ export default class App extends React.Component {
           <Route path="/" element={<Table />} />
           <Route path="/hello" element={<Navigate to="/" />} />
           <Route path="/login" element={<LogIn/>}/>
+          <Route path="/register" element={<Register/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

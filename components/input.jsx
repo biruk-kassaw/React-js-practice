@@ -13,7 +13,6 @@ const Input = ({ value, name, type, onChange, label, error }) => {
           className="form-control"
           id={name}
           aria-describedby="emailHelp"
-          placeholder="Enter email"
         />
       </div>
       {error && <div className="alert alert-danger">{error}</div>}
