@@ -83,7 +83,6 @@ class Table extends React.Component {
     let paginatedMovies = this.paginateMovies(movies);
 
     return (
-
       <div className="container">
         {movies.length > 0}
         <h1> showing {movies.length} movies in database</h1>
@@ -96,6 +95,9 @@ class Table extends React.Component {
           </div>
 
           <div className="col-4">
+            <Link to="/movie/new" className="btn btn-primary">
+              New Movie
+            </Link>
             <table className="table">
               <thead>
                 <tr>
