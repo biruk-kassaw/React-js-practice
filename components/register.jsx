@@ -90,7 +90,7 @@ class Register extends React.Component {
           label="Enter Username"
           error={errors.userName}
         />
-        <button type="submit" className="btn btn-primary">
+        <button disabled={Object.keys(this.validate()).length !== 0} type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>

@@ -95,7 +95,7 @@ class Table extends React.Component {
           </div>
 
           <div className="col-4">
-            <Link to="/movie/new" className="btn btn-primary">
+            <Link to="/movies/new" className="btn btn-primary">
               New Movie
             </Link>
             <table className="table">

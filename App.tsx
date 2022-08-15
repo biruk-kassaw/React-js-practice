@@ -19,7 +19,6 @@ export default class App extends React.Component {
         <Nav />
         {/* <button className="btn btn-secondary m-2">Reset</button> */}
         <Routes>
-          <Route Path="/movie/new" element={<NewMovie />} />
           <Route path="/about" element={<About />} />
           <Route path="/tables" element={<Table />}>
             <Route path="new" element={<MovieDetail />} />
@@ -30,6 +29,7 @@ export default class App extends React.Component {
           <Route path="/hello" element={<Navigate to="/" />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/movies/new" element={<NewMovie />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
