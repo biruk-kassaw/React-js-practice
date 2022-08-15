@@ -6,31 +6,37 @@ class NewMovie extends React.Component {
     errors: {},
   };
 
-  validateInput = (e)=>{
-    if(e.target.name =="numberInStock"){
+  validateInput = (e) => {
+    if (e.target.name == 'numberInStock') {
       if (parseInt(e.target.value) < 0) {
-        return'number in stock can not be less than 0';
+        return 'number in stock can not be less than 0';
       }
       if (parseInt(e.target.value) > 100) {
-        return'number in stock can not be greater than 100';
+        return 'number in stock can not be greater than 100';
       }
     }
-  }
+
+    if (e.target.name == 'title') {
+      if (!e.target.value) {
+        return 'title can not be empty';
+      }
+    }
+  };
 
   handleChange = (e) => {
-    let errors = {...this.state.errors}
+    let errors = { ...this.state.errors };
 
     let newMovie = { ...this.state.newMovie };
     newMovie[e.target.name] = e.target.value;
-    let error = this.validateInput(e)
-    errors[e.target.name] = error
+    let error = this.validateInput(e);
+    errors[e.target.name] = error;
 
     this.setState({ newMovie, errors });
   };
 
   validate = () => {
     let errors = {};
-    const { numberInStock, rate } = this.state.newMovie;
+    const { numberInStock, rate, title } = this.state.newMovie;
 
     if (parseInt(numberInStock) < 0) {
       errors.numberInStock = 'number in stock can not be less than 0';
@@ -41,7 +47,9 @@ class NewMovie extends React.Component {
     if (parseInt(rate) > 10) {
       errors.numberInStock = 'rating can not be greater than 10';
     }
-
+    if (title.length === 0) {
+      errors.title = 'title can not be empty';
+    }
     return errors;
   };
 
@@ -68,7 +76,7 @@ class NewMovie extends React.Component {
           type="text"
           onChange={this.handleChange}
           label="Enter Title"
-          error={errors.email}
+          error={errors.title}
         />
         <Input
           value={newMovie.numberInStock}
