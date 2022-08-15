@@ -19,7 +19,9 @@ class Table extends React.Component {
   componentDidMount() {
     this.setState({ movies: getMovies(), genres: getGenres() });
   }
-
+  handleAddMovie = (movie)=>{
+    
+  }
   handleDelete(_id) {
     this.setState({
       movies: this.state.movies.filter((movie) => movie._id != _id),

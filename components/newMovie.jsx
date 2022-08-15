@@ -1,8 +1,10 @@
 import React from 'react';
 import Input from './input';
+import { saveMovie } from '../services/fakeMovieService';
+import { Navigate } from 'react-router-dom';
 class NewMovie extends React.Component {
   state = {
-    newMovie: { title: '', genre: '', numberInStock: '', rate: '' },
+    newMovie: { title: '', genre: '', numberInStock: '', dailyRentalRate: '' },
     errors: {},
   };
 
@@ -36,7 +38,7 @@ class NewMovie extends React.Component {
 
   validate = () => {
     let errors = {};
-    const { numberInStock, rate, title } = this.state.newMovie;
+    const { numberInStock, dailyRentalRate, title } = this.state.newMovie;
 
     if (parseInt(numberInStock) < 0) {
       errors.numberInStock = 'number in stock can not be less than 0';
@@ -44,7 +46,7 @@ class NewMovie extends React.Component {
     if (parseInt(numberInStock) > 100) {
       errors.numberInStock = 'number in stock can not be greater than 100';
     }
-    if (parseInt(rate) > 10) {
+    if (parseInt(dailyRentalRate) > 10) {
       errors.numberInStock = 'rating can not be greater than 10';
     }
     if (title.length === 0) {
@@ -55,13 +57,17 @@ class NewMovie extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.newMovie);
     const errors = this.validate();
 
     this.setState({ errors });
 
     if (Object.keys(errors).length == 0) {
+      let newMovie = this.state.newMovie;
+      newMovie.genreId = '5b21ca3eeb7f6fbccd471818'
+      saveMovie(newMovie);
+      console.log(newMovie)
       console.log('submitted');
+      // <Navigate to="/tables" />
     }
   };
 
@@ -103,12 +109,12 @@ class NewMovie extends React.Component {
           </select>
         </div>
         <Input
-          value={newMovie.rate}
-          name="rate"
+          value={newMovie.dailyRentalRate}
+          name="dailyRentalRate"
           type="number"
           onChange={this.handleChange}
-          label="Enter Rate"
-          error={errors.rate}
+          label="Enter dailyRentalRate"
+          error={errors.dailyRentalRate}
         />
         <button
           disabled={Object.keys(this.validate()).length !== 0}
