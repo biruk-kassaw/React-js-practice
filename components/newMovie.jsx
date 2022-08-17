@@ -74,14 +74,19 @@ class NewMovie extends React.Component {
       saveMovie(newMovie);
       console.log(newMovie);
       console.log('submitted');
-      // <Navigate to="/tables" />
     }
   };
-
+  afterS() {
+    return <Navigate to="/tables" />;
+  }
   render() {
     const { newMovie, errors } = this.state;
     return (
-      <form className="container" onSubmit={this.handleSubmit}>
+      <form
+        className="container"
+        onSubmit={this.handleSubmit}
+        afterSubmit={this.afterS()}
+      >
         <h1>Movie Form</h1>
         <Input
           value={newMovie.title}
