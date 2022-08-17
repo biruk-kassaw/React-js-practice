@@ -1,13 +1,20 @@
 import React from 'react';
 import Input from './input';
-import { saveMovie } from '../services/fakeMovieService';
+import { saveMovie, getMovie } from '../services/fakeMovieService';
 import { Navigate } from 'react-router-dom';
+
 class NewMovie extends React.Component {
   state = {
     newMovie: { title: '', genre: '', numberInStock: '', dailyRentalRate: '' },
     errors: {},
   };
-
+  componentDidMount() {
+    if (this.props.params) {
+      const id = this.props.params.id;
+      const movie = getMovie(id);
+      this.setState({ newMovie: movie });
+    }
+  }
   validateInput = (e) => {
     if (e.target.name == 'numberInStock') {
       if (parseInt(e.target.value) < 0) {
@@ -63,9 +70,9 @@ class NewMovie extends React.Component {
 
     if (Object.keys(errors).length == 0) {
       let newMovie = this.state.newMovie;
-      newMovie.genreId = '5b21ca3eeb7f6fbccd471818'
+      newMovie.genreId = '5b21ca3eeb7f6fbccd471818';
       saveMovie(newMovie);
-      console.log(newMovie)
+      console.log(newMovie);
       console.log('submitted');
       // <Navigate to="/tables" />
     }
