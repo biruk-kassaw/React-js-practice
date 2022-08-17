@@ -6,6 +6,7 @@ import Paginate from '../utils/paginate';
 import ListGroup from './listGroup';
 import { getGenres } from '../services/fakeGenreService';
 import { Link, Outlet } from 'react-router-dom';
+import Input from './input';
 class Table extends React.Component {
   state = {
     movies: [],
@@ -14,14 +15,13 @@ class Table extends React.Component {
     genres: [],
     currentGenre: 'All',
     sortBy: 'title',
+    keyWord: '',
   };
 
   componentDidMount() {
     this.setState({ movies: getMovies(), genres: getGenres() });
   }
-  handleAddMovie = (movie)=>{
-    
-  }
+  handleAddMovie = (movie) => {};
   handleDelete(_id) {
     this.setState({
       movies: this.state.movies.filter((movie) => movie._id != _id),
@@ -79,15 +79,34 @@ class Table extends React.Component {
     });
     return movies;
   };
-
+  handleSearch = (e) => {
+    this.setState({ keyWord: e.target.value });
+    let movies = [
+      {
+        _id: '5b21ca3eeb7f6fbccd471815',
+        title: 'Terminator',
+        genre: { _id: '5b21ca3eeb7f6fbccd471818', name: 'Action' },
+        numberInStock: 6,
+        dailyRentalRate: 2.5,
+        publishDate: '2018-01-03T19:04:28.809Z',
+        liked: false,
+      },
+    ];
+    this.setState({ movies });
+  };
   render() {
     let movies = this.handleGenreChange(this.state.currentGenre);
     let paginatedMovies = this.paginateMovies(movies);
-
     return (
       <div className="container">
         {movies.length > 0}
         <h1> showing {movies.length} movies in database</h1>
+        <input
+          onChange={this.handleSearch}
+          value={this.keyWord}
+          type="text"
+          className="form-control m-4"
+        />
         <div className="container row">
           <div className="col-2">
             <ListGroup
@@ -95,95 +114,96 @@ class Table extends React.Component {
               changeGenre={this.changeGenre}
             />
           </div>
+          {Object.keys(paginatedMovies).length !== 0 && (
+            <div className="col-4">
+              <Link to="/movies/new" className="btn btn-primary">
+                New Movie
+              </Link>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      onClick={() => {
+                        this.changeSorteBy('title');
+                      }}
+                    >
+                      Title
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => {
+                        this.changeSorteBy('genre.name');
+                      }}
+                    >
+                      Genre
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => {
+                        this.changeSorteBy('stock');
+                      }}
+                    >
+                      Stock
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => {
+                        this.changeSorteBy('rate');
+                      }}
+                    >
+                      Rate
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedMovies.map((movie) => {
+                    return (
+                      <tr key={movie._id}>
+                        <th scope="row">
+                          <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+                        </th>
+                        <td>
+                          <Link to={`/movies/?movie_genre=${movie.genre.name}`}>
+                            {movie.genre.name}
+                          </Link>
+                        </td>
+                        <td>{movie.numberInStock}</td>
+                        <td>{movie.dailyRentalRate}</td>
+                        <td>
+                          <Like
+                            liked={movie.liked}
+                            onClick={() => {
+                              this.handleLike(movie);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => {
+                              this.handleDelete(movie._id);
+                            }}
+                            className="btn btn-danger btn-sm"
+                          >
+                            delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
 
-          <div className="col-4">
-            <Link to="/movies/new" className="btn btn-primary">
-              New Movie
-            </Link>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    onClick={() => {
-                      this.changeSorteBy('title');
-                    }}
-                  >
-                    Title
-                  </th>
-                  <th
-                    scope="col"
-                    onClick={() => {
-                      this.changeSorteBy('genre.name');
-                    }}
-                  >
-                    Genre
-                  </th>
-                  <th
-                    scope="col"
-                    onClick={() => {
-                      this.changeSorteBy('stock');
-                    }}
-                  >
-                    Stock
-                  </th>
-                  <th
-                    scope="col"
-                    onClick={() => {
-                      this.changeSorteBy('rate');
-                    }}
-                  >
-                    Rate
-                  </th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedMovies.map((movie) => {
-                  return (
-                    <tr key={movie._id}>
-                      <th scope="row">
-                        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
-                      </th>
-                      <td>
-                        <Link to={`/movies/?movie_genre=${movie.genre.name}`}>
-                          {movie.genre.name}
-                        </Link>
-                      </td>
-                      <td>{movie.numberInStock}</td>
-                      <td>{movie.dailyRentalRate}</td>
-                      <td>
-                        <Like
-                          liked={movie.liked}
-                          onClick={() => {
-                            this.handleLike(movie);
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => {
-                            this.handleDelete(movie._id);
-                          }}
-                          className="btn btn-danger btn-sm"
-                        >
-                          delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-
-            <Pagination
-              itemCount={movies.length}
-              pageSize={this.state.pageSize}
-              handlePageChange={this.handlePageChange}
-              currentPage={this.state.currentPage}
-            />
-          </div>
+              <Pagination
+                itemCount={movies.length}
+                pageSize={this.state.pageSize}
+                handlePageChange={this.handlePageChange}
+                currentPage={this.state.currentPage}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
